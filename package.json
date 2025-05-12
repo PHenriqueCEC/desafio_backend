@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.15.17",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
   "scripts": {
-    "start": "nodemon src/shared/infra/http/server.ts",
+    "start": "nodemon --exec ./node_modules/.bin/tsx src/shared/infra/http/server.ts",
     "dev": "tsx watch src/shared/infra/http/server.ts"
   },
   "repository": {
