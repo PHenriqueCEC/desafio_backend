@@ -1,28 +1,29 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import LeituraInversor from '../models/Leitura';
+import { GetMaximumPowerDayParams, MaximumPowerDayDTO } from '../../dtos/MaximumPowerDayDTO';
 
 const MaximumPowerDay = {
     async getMaximumPowerDay(req: Request, res: Response, next: NextFunction) {
         try {
             const { inversor_id, data_inicio, data_fim } = req.params;
-    
+
             if (!inversor_id || !data_inicio || !data_fim) {
                 return res.status(400).json({
                     error: 'Os parâmetros "inversor_id", "data_inicio" e "data_fim" são obrigatórios.'
                 });
             }
-    
+
             const dataInicio = new Date(`${data_inicio}T00:00:00.000Z`);
             const dataFim = new Date(`${data_fim}T23:59:59.999Z`);
-    
+
             if (isNaN(dataInicio.getTime()) || isNaN(dataFim.getTime())) {
                 return res.status(400).json({ error: 'Formato de data inválido. Use YYYY-MM-DD.' });
             }
-    
+
             if (dataFim < dataInicio) {
                 return res.status(400).json({ error: 'Data de início não pode ser posterior à data final!' });
             }
-    
+
             const resultado = await LeituraInversor.aggregate([
                 {
                     $match: {
@@ -41,9 +42,7 @@ const MaximumPowerDay = {
                         max_potencia_dia: { $max: "$potencia_ativa_watt" }
                     }
                 },
-                {
-                    $sort: { "_id.dia": 1 }
-                },
+                { $sort: { "_id.dia": 1 } },
                 {
                     $group: {
                         _id: null,
@@ -64,27 +63,28 @@ const MaximumPowerDay = {
                     }
                 }
             ]);
-    
+
             if (resultado.length === 0) {
-                return res.status(404).json({ message: 'Nenhuma leitura encontrada para os critérios informados.' });
+                return res.status(404).json({ error: 'Nenhuma leitura encontrada para os critérios informados.' });
             }
-    
+
             const { maximas_diarias, soma_maximas } = resultado[0];
-    
-            return res.status(200).json({
+
+            const response: MaximumPowerDayDTO = {
                 inversor_id: Number(inversor_id),
                 data_inicio: dataInicio.toISOString(),
                 data_fim: dataFim.toISOString(),
                 maximas_diarias,
                 soma_maximas
-            });
+            };
+
+            return res.status(200).json(response);
+
         } catch (err) {
             console.error(err);
             return res.status(500).json({ error: 'Erro ao buscar potência máxima diária do inversor.' });
         }
     }
-    
-    
-}
+};
 
 export default MaximumPowerDay

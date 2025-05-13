@@ -23,7 +23,7 @@ routes.get("/inversor/:inversor_id", InversorController.getOne as RequestHandler
 routes.put("/inversor/:inversor_id", InversorController.update as RequestHandler);
 routes.delete("/inversor/:inversor_id", InversorController.delete as RequestHandler);
 
-//INVERSOR POTÊNCIA MÁXIMA ROTA
+//OUTRAS ROTAS
 routes.get("/geracaoInversorRangeDeData/:inversor_id/:data_inicio/:data_fim", GenerationInverterRangeData.getMaximumInverterPower as unknown as RequestHandler); 
 routes.get("/temperaturaMediaInversor/:inversor_id/:data_inicio/:data_fim", AverageTemperaturePerDay.getAverageTemperature as unknown as RequestHandler); 
 routes.get("/potenciaMaximaDia/:inversor_id/:data_inicio/:data_fim", MaximumPowerDay.getMaximumPowerDay as unknown as RequestHandler); 
