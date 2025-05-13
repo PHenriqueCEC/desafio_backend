@@ -4,6 +4,7 @@ import InversorController from '../../../modules/controllers/InversorController'
 import GenerationInverterRangeData from '../../../modules/controllers/GenerationInverterRangeData';
 import AverageTemperaturePerDay from '../../../modules/controllers/AverageTemperaturePerDay'
 import MaximumPowerDay from '../../../modules/controllers/MaximumPowerDay';
+import PlantGenerationDateRange from '../../../modules/controllers/PlantGenerationDateRangeController';
 
 
 const routes = express.Router();
@@ -26,6 +27,7 @@ routes.delete("/inversor/:inversor_id", InversorController.delete as RequestHand
 routes.get("/geracaoInversorRangeDeData/:inversor_id/:data_inicio/:data_fim", GenerationInverterRangeData.getMaximumInverterPower as unknown as RequestHandler); 
 routes.get("/temperaturaMediaInversor/:inversor_id/:data_inicio/:data_fim", AverageTemperaturePerDay.getAverageTemperature as unknown as RequestHandler); 
 routes.get("/potenciaMaximaDia/:inversor_id/:data_inicio/:data_fim", MaximumPowerDay.getMaximumPowerDay as unknown as RequestHandler); 
+routes.get("/geracaoUsina/:inversor_id/:data_inicio/:data_fim", PlantGenerationDateRange.getPlantGenerationDateRange as unknown as RequestHandler); 
 
 
 
