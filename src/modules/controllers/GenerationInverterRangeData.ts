@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import LeituraInversor from '../models/Leitura';
 
-const MaximumInverterPowerController = {
+const GenerationInverterRangeData = {
     async getMaximumInverterPower(req: Request, res: Response, next: NextFunction) {
         try {
             const { inversor_id, data_inicio, data_fim } = req.params;
@@ -68,4 +68,4 @@ const MaximumInverterPowerController = {
     
 };
 
-export default MaximumInverterPowerController;
+export default GenerationInverterRangeData;

@@ -1,7 +1,7 @@
 import express, { RequestHandler } from 'express';
 import PlantsController from '../../../modules/controllers/PlantsController';
 import InversorController from '../../../modules/controllers/InversorController';
-import MaximumInverterPowerController from '../../../modules/controllers/MaximumInverterPowerController';
+import GenerationInverterRangeData from '../../../modules/controllers/GenerationInverterRangeData';
 import AverageTemperaturePerDay from '../../../modules/controllers/AverageTemperaturePerDay'
 
 const routes = express.Router();
@@ -21,7 +21,7 @@ routes.put("/inversor/:inversor_id", InversorController.update as RequestHandler
 routes.delete("/inversor/:inversor_id", InversorController.delete as RequestHandler);
 
 //INVERSOR POTÊNCIA MÁXIMA ROTA
-routes.get("/inversorPotenciaMaxima/:inversor_id/:data_inicio/:data_fim", MaximumInverterPowerController.getMaximumInverterPower as unknown as RequestHandler); 
+routes.get("/geracaoInversorRangeDeData/:inversor_id/:data_inicio/:data_fim", GenerationInverterRangeData.getMaximumInverterPower as unknown as RequestHandler); 
 routes.get("/temperaturaMediaInversor/:inversor_id/:data_inicio/:data_fim", AverageTemperaturePerDay.getAverageTemperature as unknown as RequestHandler); 
 
 
