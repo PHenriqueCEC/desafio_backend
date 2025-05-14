@@ -4,6 +4,7 @@ import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import routes from '../routes';
+import { swaggerUi, swaggerSpec } from '../../../config/swagger';
 
 const mongoUri = 'mongodb://localhost:27017/desafiobackend';
 
@@ -125,6 +126,8 @@ async function startServer() {
 }
 
 startServer();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Tratamento de sinais para shutdown graceful
 process.on('SIGINT', async () => {
